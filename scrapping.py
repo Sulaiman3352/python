@@ -27,31 +27,32 @@ soup = BeautifulSoup(src, "lxml")
 
 anime_name = soup.find_all("title")
 anime_link = soup.find_all("a",  text="4shared")
-an_l = anime_link.find("a").attrs['data-ep-url'] 
-print(an_l) 
+#an_l = anime_link.find("a").attrs['data-ep-url'] 
+#print(an_l) 
 
 # 6th step loop over returned lists to exract needed info other lists 
 
 for i in range(len(anime_name)) :
     anime_name_list.append(anime_name[i].string)
 # convert list to string and Extract Link 
-#    an = str(anime_link[0]) 
-#    an2 = an.split() 
-#    an3 = an2[1]
-#    anime_link_list.append(an3[13:-1])
-# 
+    an = str(anime_link[0]) 
+    an2 = an.split() 
+    an3 = an2[1]
+    an4 = an3[13:-1] 
+    anime_link_list.append(an4)
+ 
 
-    anime_link_list.append(anime_link[i].find("a").attrs['data-ep-url'])   
+#    anime_link_list.append(anime_link[i].find("a").attrs['data-ep-url'])   
     print(anime_name_list,anime_link_list) 
 
 #7th step create csv file and fill it with values 
 
-#file_list = [anime_name_list, anime_link_list] 
-#exported = zip_longest(*file_list) 
-#with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
-#    wr = csv.writer(myfile) 
-#    wr.writerow(["Anime name and episode number", "Page Link for video"])
-#    wr.writerows(exported)  
+file_list = [anime_name_list, anime_link_list] 
+exported = zip_longest(*file_list) 
+with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
+    wr = csv.writer(myfile) 
+    wr.writerow(["Anime name and episode number", "Page Link for video"])
+    wr.writerows(exported)  
 
 #8th step to fetch the - of the job and fetch in page details
 
