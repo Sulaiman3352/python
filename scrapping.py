@@ -9,6 +9,7 @@ from itertools import zip_longest
 
 anime_name_list = []
 anime_link_list = []
+down_link = [] 
 
 # 2nd step use requests to fetch the url 
 
@@ -28,7 +29,7 @@ soup = BeautifulSoup(src, "lxml")
 anime_name = soup.find_all("title")
 anime_link = soup.find_all("a",  text="4shared")
 
- 
+
 
 # 6th step loop over returned lists to exract needed info other lists 
 
@@ -38,21 +39,26 @@ for i in range(len(anime_name)) :
     an = str(anime_link[0]) 
     an2 = an.split() 
     an3 = an2[1]
-    an4 = an3[13:-1] 
-    anime_link_list.append(an4)
+    link = an3[13:-1] 
+    anime_link_list.append(link)
     
-
+for links in link:
+    result = requests.get(link) 
+    src = result.content 
+    soup = BeautifulSoup(src, "lxml") 
+    downl_link = soup.find("source", {"type":"video/mp4"}) 
+    down_link.append(downl_link['src']) 
 
 #    anime_link_list.append(anime_link[i].find("a").attrs['data-ep-url'])   
 print(anime_name_list,anime_link_list) 
-
+print(down_link) 
 #7th step create csv file and fill it with values 
 
-file_list = [anime_name_list, anime_link_list] 
+file_list = [anime_name_list, anime_link_list, down_link] 
 exported = zip_longest(*file_list) 
 with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
     wr = csv.writer(myfile) 
-    wr.writerow(["Anime name and episode number", "Page Link for video"])
+    wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
     wr.writerows(exported)  
 
 #8th step to fetch the - of the job and fetch in page details
