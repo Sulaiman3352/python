@@ -42,7 +42,7 @@ for i in range(len(anime_name)) :
     link = an3[13:-1] 
     anime_link_list.append(link)
     
-for links in link:
+for anime_link_list in link:
     result = requests.get(link) 
     src = result.content 
     soup = BeautifulSoup(src, "lxml") 
