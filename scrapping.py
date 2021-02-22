@@ -42,7 +42,7 @@ for i in range(len(anime_name)) :
     link = an3[13:-1] 
     anime_link_list.append(link)
     
-for anime_link_list in link:
+for item in anime_link_list:
     result = requests.get(link) 
     src = result.content 
     soup = BeautifulSoup(src, "lxml") 
@@ -56,7 +56,7 @@ print(down_link)
 
 file_list = [anime_name_list, anime_link_list, down_link] 
 exported = zip_longest(*file_list) 
-with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
+with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile: 
     wr = csv.writer(myfile) 
     wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
     wr.writerows(exported)  
