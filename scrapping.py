@@ -34,14 +34,16 @@ while True:
 
     anime_name = soup.find_all("title")
     anime_link = soup.find_all("a",  text="4shared")
-    print(anime_link)      
+          
     emp = []
     page_num += 1
+    print(" page switched "+ str(page_num) )
+    
     if str(anime_link) == str(emp): 
         continue 
     else:
         pass 
-        # 6th step loop over returned lists to exract needed info other lists 
+# 6th step loop over returned lists to exract needed info other lists 
 
         for i in range(len(anime_name)) :
             anime_name_list.append(anime_name[i].string)
@@ -52,7 +54,7 @@ while True:
             an3 = an2[1]
             link = an3[13:-1] 
             anime_link_list.append(link)
-        print(" page switched "+ str(page_num) )
+        
      
             
 
@@ -64,8 +66,7 @@ for item in anime_link_list:
     down_link.append(downl_link['src']) 
 
 #    anime_link_list.append(anime_link[i].find("a").attrs['data-ep-url'])   
-print(anime_name_list,anime_link_list) 
-print(down_link) 
+ 
 
 #7th step create csv file and fill it with values 
 
