@@ -6,43 +6,59 @@ import requests
 from bs4 import BeautifulSoup
 import csv 
 from itertools import zip_longest 
+import collections  
 
 anime_name_list = []
 anime_link_list = []
 down_link = [] 
 
 # 2nd step use requests to fetch the url 
-
-result = requests.get("https://ww.anime4up.com/episode/boruto-naruto-next-generations-%D8%A7%D9%84%D8%AD%D9%84%D9%82%D8%A9-1/")
+page_num = 1 
+while True:
+    result = requests.get(f"https://ww.anime4up.com/episode/boruto-naruto-next-generations-%D8%A7%D9%84%D8%AD%D9%84%D9%82%D8%A9-{page_num}/")
 
 # 3rd step save page content/markup 
 
-src = result.content
+    src = result.content
 
 # 4th step create soup object to parse content 
 
-soup = BeautifulSoup(src, "lxml")
+    soup = BeautifulSoup(src, "lxml")
+
+    if page_num > 187 : 
+        print(" finished ")
+        break 
 
 # 5th step find the elements contanining info we need 
-# anime name + episode number , link 
+    # anime name + episode number , link 
 
-anime_name = soup.find_all("title")
-anime_link = soup.find_all("a",  text="4shared")
-
-
-
+    anime_name = soup.find_all("title")
+    anime_link = soup.find_all("a",  text="4shared")
+          
+    emp = []
+    page_num += 1
+    print(" page switched "+ str(page_num) )
+    
+    if str(anime_link) == str(emp): 
+        continue 
+    else:
+        pass 
 # 6th step loop over returned lists to exract needed info other lists 
 
-for i in range(len(anime_name)) :
-    anime_name_list.append(anime_name[i].string)
-# convert list to string and Extract Link 
-    an = str(anime_link[0]) 
-    an2 = an.split() 
-    an3 = an2[1]
-    link = an3[13:-1] 
-    anime_link_list.append(link)
-    
-for item in down_link:
+        for i in range(len(anime_name)) :
+            anime_name_list.append(anime_name[i].string)
+            # convert list to string and Extract Link 
+            an = str(anime_link[0]) 
+            
+            an2 = an.split() 
+            an3 = an2[1]
+            link = an3[13:-1] 
+            anime_link_list.append(link)
+        
+     
+            
+
+for item in anime_link_list:
     result = requests.get(link) 
     src = result.content 
     soup = BeautifulSoup(src, "lxml") 
@@ -50,17 +66,16 @@ for item in down_link:
     down_link.append(downl_link['src']) 
 
 #    anime_link_list.append(anime_link[i].find("a").attrs['data-ep-url'])   
-print(anime_name_list,anime_link_list) 
-print(down_link) 
+ 
+
 #7th step create csv file and fill it with values 
 
 file_list = [anime_name_list, anime_link_list, down_link] 
 exported = zip_longest(*file_list) 
-with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
+with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile: 
     wr = csv.writer(myfile) 
     wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
     wr.writerows(exported)  
 
 #8th step to fetch the - of the job and fetch in page details
-
 
