@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import csv 
 from itertools import zip_longest 
 import collections  
+import urllib.request
 
 anime_name_list = []
 anime_link_list = []
@@ -26,7 +27,7 @@ while True:
     soup = BeautifulSoup(src, "lxml")
 
     if page_num > 187 : 
-        print(" finished ")
+        print(" finished stage 1 of 2 ")
         break 
 
 # 5th step find the elements contanining info we need 
@@ -36,9 +37,9 @@ while True:
     anime_link = soup.find_all("a",  text="4shared")
           
     emp = []
-    page_num += 1
     print(" page switched "+ str(page_num) )
-    
+    page_num += 1 
+
     if str(anime_link) == str(emp): 
         continue 
     else:
@@ -77,5 +78,13 @@ with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile:
     wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
     wr.writerows(exported)  
 
+print(" finished stage 2 of 2 ") 
+
 #8th step to fetch the - of the job and fetch in page details
 
+
+#9th step download episode from link 
+
+#urllib.request.urlretrieve(downl_link['src'] , anime_name) 
+
+#
