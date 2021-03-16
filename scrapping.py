@@ -85,6 +85,8 @@ print(" finished stage 2 of 2 ")
 
 #9th step download episode from link 
 
-#urllib.request.urlretrieve(downl_link['src'] , anime_name) 
+for i in anime_name_list :
+    urllib.request.urlretrieve(down_link[0] , anime_name_list[0] ) 
+    i+=1
 
 #
