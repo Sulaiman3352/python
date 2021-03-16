@@ -72,7 +72,8 @@ for item in anime_link_list:
 
 file_list = [anime_name_list, anime_link_list, down_link] 
 exported = zip_longest(*file_list) 
-with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile: 
+with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile:
+#with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile: 
     wr = csv.writer(myfile) 
     wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
     wr.writerows(exported)  
