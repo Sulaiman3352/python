@@ -1,4 +1,4 @@
-# Git link from anime4up website 
+# Git link and download boruto from anime4up website 
 
 # 1st step import modules 
 
