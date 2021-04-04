@@ -1,4 +1,4 @@
-# Git link and download boruto from anime4up website 
+# Git link from anime4up website 
 
 # 1st step import modules 
 
@@ -39,8 +39,31 @@ while True:
     emp = []
     print(" page switched "+ str(page_num) )
     page_num += 1 
+     
+    # other website 
+    a = "vidbm"
+    b = "uptostream" 
 
     if str(anime_link) == str(emp): 
+    # git link from other host website 
+        anime_link = soup.find_all("a",  text="vidbm") 
+        if a in str(anime_link) :
+            for i in range(len(anime_name)) :
+                anime_name_list.append(anime_name[i].string)
+
+                link = str(anime_link)[17:-26].replace('embed-', '') 
+                anime_link_list.append(link) 
+
+            for item in anime_link_list:
+                result = requests.get(link) 
+                src = result.content 
+                soup = BeautifulSoup(src, "lxml") 
+                downl_link = soup.find("video", {"class":"jw-video jw-reset"}) 
+                down_link.append(downl_link['src']) 
+
+        else :
+            anime_link = soup.find_all("a",  text="uptostream") 
+
         continue 
     else:
         pass 
@@ -73,7 +96,7 @@ for item in anime_link_list:
 
 file_list = [anime_name_list, anime_link_list, down_link] 
 exported = zip_longest(*file_list) 
-with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile:
+with open("/Users/sulai/Documents/Boruto_link.csv", "w") as myfile: 
 #with open("/home/salomy/Documents/Boruto_link.csv", "w") as myfile: 
     wr = csv.writer(myfile) 
     wr.writerow(["Anime name and episode number", "Page Link for video", "download link for video"])
@@ -86,8 +109,8 @@ print(" finished stage 2 of 2 ")
 
 #9th step download episode from link 
 
-for i in anime_name_list :
-    urllib.request.urlretrieve(down_link[0] , anime_name_list[0] ) 
-    i+=1
+#for i in anime_name_list :
+#    urllib.request.urlretrieve(down_link[0] , anime_name_list[0] ) 
+#    i+=1
 
 #
